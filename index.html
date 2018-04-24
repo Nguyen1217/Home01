@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tech</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+    
+</head>
+<body>
+    <!-- header -->
+     <header>
+        <div class="wrapped-header">
+            <!-- navbar -->
+            <nav class="navbar">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle = "collapse" data-target = "#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <a class="navbar-brand" href="#">Logo</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id = "myNavbar">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href = "#" class="sign-in"><img src = "assets/img/signin.png"/>Sign in</a></li>
+                            <li><a href = "#" class = "sign-up">Sign up</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- end of navbar -->
+
+            <!-- section 1 -->
+            <section class="home-section-1">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1>Connect with the community you have interest</h1>
+                        </div>
+                        <div class="col-md-6">
+                        <!-- component search -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- end of section 1 -->
+        </div>
+    </header>
+    <!-- end of header -->
+
+    
+    <!-- content-->
+    <div class="content">
+        <!-- section 2 -->
+        <section class="home-section-2" id="js-home-section-2">
+                <div class="container">
+                    <div class="row icons-3-wrapper">
+                            <icon-action></icon-action>
+                    </div>
+                    <div class = "btn-wrapper"><span class="btn">GET STARTED</span></div>
+                </div>
+            
+        </section>
+            <!-- end of section 2 -->
+
+            <!-- section 3 -->
+        <section class="home-section-3" id="js-home-section-3">
+            <div class="container">
+                <div class = "row make_question">
+                    <div class="col-md-7 col-sm-6 col-xs-6">
+                        <!-- list of tabs -->
+                        <ul class="listTab">
+                            <li v-cloak class="topic" v-for = "tab in tabs" v-bind:key="tab" v-bind:class = "{active: currentTab === tab}" v-on:click = "currentTab = tab">{{tab}}</li>
+                        </ul>
+                    </div>
+                    <!-- end list tabs -->
+                    <div class="col-md-2 col-sm-2 all-question">
+                        <img src = "assets/img/answer-1.png">
+                        <a class = "all-ans">Answer</a>
+                    </div>
+                    <!-- toggle popup -->
+                    <div class="col-md-3 col-sm-4 col-xs-6 toggle-popup">
+                        <input class = "input-search" type="text" v-on:click = "showModal = true" placeholder="What is your question?">
+                        <input class = "search" type="text" v-on:click = "showModal = true" placeholder="Search">
+                        <img class = "icon-search"  v-on:click = "showModal = true" src="assets/img/search.png">
+                    </div>
+                </div>
+                
+
+                <!--  popup -->
+                <div class="row">
+                    <modal 
+                        v-if = "showModal" 
+                        v-on:close = "showModal = false" 
+                        :userinfo = "user">
+                    </modal>
+                    
+                <!-- top questions -->
+                    <component 
+                        v-bind:is="currentTabComponent" 
+                        class="tab" 
+                        :alldata1 = "posts.tab_top" 
+                        :alldata2 = "posts.tab_english" 
+                        :alldata3 = "posts.tab_technology">
+                    </component >
+                </div>
+            </div>
+        </section>
+    </div>
+        <!-- end of section 3 -->
+    <!-- end of content -->
+
+   
+    <!-- post childrent COMPONENT template-->
+    <template id="post">
+        <div class="post">
+            <div class="col-md-7 col-sm-9 col-xs-10 post-content">
+                <div class="avatar pull-left">
+                    <a :href = "'https://twitter.com/'+item.url_profile" target="_blank" >
+                        <img class="thumbnail-asker" :src = "'assets/img/avatar_users/' + item.avar_ask + '.png'"/>
+                    </a>
+                </div>
+            
+                <h2 class="title">
+                    <a :href = "'https://scifi.stackexchange.com/questions' + item.url + '/how-is-the-name-gandalf-pronounced'" target = "_blank"class="title">
+                        {{item.title}}
+                    </a>
+                    <br>
+                    <small>{{item.num_answer}} answers</small>
+                    <small>{{item.time_ask}}</small>
+                </h2>
+                
+                <div class="icon-action">
+                    <p class="icon">
+                        <a :href = "'https://scifi.stackexchange.com/questions/' + item.url + '/how-is-the-name-gandalf-pronounced'" target = "_blank">
+                            <img src = "assets\img\answer-2.png"/>
+                            <span>Answer</span>
+                        </a>
+                    </p>
+                    <p class="icon">
+                        <img src="assets\img\follow.png"/>
+                        <span>Follow {{item.num_follow}}</span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-xs-2 visible-xs mobile">
+                <span>{{item.num_answer}}</span>
+                <a :href = "'https://scifi.stackexchange.com/questions/' + item.url + '/how-is-the-name-gandalf-pronounced'" target = "_blank"><span class="glyphicon glyphicon-circle-arrow-right"></span></a>
+            </div>
+            <div class="col-md-1 hidden-xs hidden-sm post-eval">
+                <span>{{item.num_posts}}</span>
+                <br>
+                <small>posts</small>
+            </div>
+            <div class="col-md-1 hidden-xs hidden-sm post-eval">
+                <span>{{item.num_views}}</span>
+                <br>
+                <small>views</small>
+            </div>
+            <div class="col-md-3 col-sm-3 hidden-xs  post-answer">
+                <div class="card">
+                    <p class="response">
+                        <a ><img :src = "'assets/img/avatar_users/' + item.avar_asn + '.png'" class="thumb-answer"/></a>
+                        <a>{{item.time_ans}}</a>
+                    </p>
+                    <div class = "ans-near">
+                        <p>{{item.ans_nearest}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+
+    <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+    <script src="assets/js/top-question.js"></script>
+</body>
+</html>
